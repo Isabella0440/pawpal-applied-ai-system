@@ -1,6 +1,9 @@
 import streamlit as st
-from datetime import date
+from datetime import date, time
 from pawpal_system import Owner, Pet, Task, Scheduler
+from src.agent import CarePlanner
+from src.prompts import FOCUS_PROMPT
+from src.retriever import Retriever
 
 st.set_page_config(page_title="PawPal+", page_icon="🐾", layout="centered")
 
@@ -152,6 +155,54 @@ if pets:
 
 else:
     st.info("Add a pet before scheduling tasks.")
+
+st.divider()
+
+st.subheader("AI Care Planner")
+
+if pets:
+    planner = CarePlanner(Retriever())
+    planner_pet = st.selectbox(
+        "Pet for care plan",
+        range(len(pets)),
+        format_func=lambda index: f"{pets[index].name} ({pets[index].species})",
+    )
+    with st.form("care_planner"):
+        focus = st.text_input(FOCUS_PROMPT, max_chars=200)
+        plan_date = st.date_input("Plan date")
+        start_col, end_col = st.columns(2)
+        start = start_col.time_input("Available from", value=time(17))
+        end = end_col.time_input("Available until", value=time(18))
+        if st.form_submit_button("Preview care task"):
+            result = planner.plan(
+                focus, pets[planner_pet], st.session_state.scheduler, plan_date, start, end
+            )
+            st.session_state.care_preview = (planner_pet, result)
+
+    preview = st.session_state.get("care_preview")
+    if preview is not None and preview[0] == planner_pet:
+        _, result = preview
+        proposal = result.proposal
+        if proposal is None:
+            st.info(result.message)
+        else:
+            st.write(f"{proposal.guide.activity} for {pets[planner_pet].name}")
+            st.write(f"{proposal.start:%Y-%m-%d %H:%M} to {proposal.end:%H:%M}")
+            st.write(result.message)
+            st.caption(f"Guide: {proposal.guide.id} ({proposal.guide.source})")
+
+        with st.expander("Planner activity log"):
+            st.code("\n".join(result.trace), language="text")
+
+        if proposal is not None and st.button("Approve and add task"):
+            del st.session_state.care_preview
+            if planner.add_approved(proposal, pets[planner_pet], st.session_state.scheduler):
+                st.session_state.show_schedule = True
+                st.success("Care task added to the schedule.")
+            else:
+                st.warning("The slot is unavailable or already used. Preview another task.")
+else:
+    st.info("Register a dog or cat to preview a care task.")
 
 st.divider()
 

@@ -1,0 +1,4 @@
+[
+  {"id":"routine-meal","species":"all","topics":"meal meals food feed feeding breakfast dinner","activity":"Follow usual feeding routine","minutes":5,"guidance":"Reserve time for the pet's existing feeding routine using its usual food and portions."},
+  {"id":"routine-water","species":"all","topics":"water bowl refill refresh","activity":"Refresh water bowl","minutes":5,"guidance":"Set aside time to rinse and refill the water bowl."}
+]

@@ -1,8 +1,39 @@
-# PawPal+ (Module 2 Project)
+# PawPal+ Applied AI System
 
-You are building **PawPal+**, a Streamlit app that helps a pet owner plan care tasks for their pet.
+PawPal+ extends the original pet-care scheduler with an **AI Care Planner** for dogs and cats. It uses local TF-IDF retrieval to recommend a routine care activity, finds an open slot, and asks for approval before adding it to the schedule.
 
-## Scenario
+## Run the Week 8 demo
+
+```bash
+python3 -m pip install -r requirements.txt
+python3 -m streamlit run app.py
+```
+
+1. Register a dog or cat.
+2. In **AI Care Planner**, select the pet and enter a routine focus such as `walk` or `enrichment`.
+3. Choose a date and availability window, then select **Preview care task**. Review the source and expand **Planner activity log** to see how the proposal was selected.
+4. Select **Approve and add task** and check the schedule. Choose **All Dates** if you planned for a future date outside the default filter.
+
+## Evaluate the planner
+
+```bash
+python3 -m src.evaluate
+python3 -m pytest
+```
+
+Sample output from the first three evaluation scenarios:
+
+```text
+Dog / walk -> Short leash walk at 17:20 (dog-walk)
+Cat / enrichment -> Supervised play at 17:20 (cat-play)
+Cat / fix my router -> I couldn't find a matching care guide. Try a specific routine activity.
+```
+
+The evaluation also checks medical redirection, a window with insufficient availability, and a schedule conflict that appears after preview. See the [architecture diagram](diagrams/architecture.mmd) and [model card](model_card.md) for the workflow and limitations.
+
+## Original scheduler
+
+### Scenario
 
 A busy pet owner needs help staying consistent with pet care. They want an assistant that can:
 

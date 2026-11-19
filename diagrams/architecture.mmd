@@ -1,0 +1,13 @@
+flowchart TD
+    UI["Streamlit care planner"] --> Input["Validate focus, species, and time window"]
+    Input -->|Supported| Retrieve["Rank care guides with TF-IDF"]
+    Input -->|Blocked| Fallback["Show explanation and activity log"]
+    KB["Dog, cat, and routine care guides"] --> Retrieve
+    Retrieve -->|Guide found| Plan["Find earliest fitting time"]
+    Retrieve -->|No match| Fallback
+    Scheduler["Existing PawPal+ scheduler"] -->|Pending tasks| Plan
+    Plan -->|No slot| Fallback
+    Plan -->|Valid slot| Preview["Show task, source, and activity log"]
+    Preview -->|Owner approves| Recheck["Recheck availability and duplicates"]
+    Recheck -->|Passed| Scheduler
+    Recheck -->|Blocked| Fallback

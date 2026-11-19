@@ -1,0 +1,5 @@
+[
+  {"id":"dog-walk","species":"dog","topics":"walk walking exercise leash outdoor sniff sniffing","activity":"Short leash walk","minutes":10,"guidance":"Plan a short leash walk at a comfortable pace on a familiar route. Treat the time as a scheduling estimate."},
+  {"id":"dog-enrichment","species":"dog","topics":"enrichment play puzzle boredom stimulation toy","activity":"Supervised enrichment","minutes":10,"guidance":"Set aside time for supervised play with a familiar toy."},
+  {"id":"dog-grooming","species":"dog","topics":"groom grooming brush brushing coat","activity":"Brush coat","minutes":5,"guidance":"Set aside a brief brushing session using the dog's familiar brush."}
+]

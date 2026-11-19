@@ -1,0 +1,5 @@
+[
+  {"id":"cat-play","species":"cat","topics":"enrichment play exercise boredom wand toy stimulation","activity":"Supervised play","minutes":10,"guidance":"Set aside time for supervised play with a familiar toy and put it away afterward."},
+  {"id":"cat-grooming","species":"cat","topics":"groom grooming brush brushing coat","activity":"Brush coat","minutes":5,"guidance":"Set aside a brief brushing session using the cat's familiar brush."},
+  {"id":"cat-litter","species":"cat","topics":"litter litterbox scoop cleaning box","activity":"Scoop litter box","minutes":5,"guidance":"Schedule a check of the litter box and scoop it as needed."}
+]
